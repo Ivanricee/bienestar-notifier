@@ -1,0 +1,15 @@
+{
+  "name": "bienestar-notifier",
+  "version": "1.0.0",
+  "description": "Cloudflare Worker que monitorea gob.mx/bienestar y envía notificaciones por Telegram",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "init-kv": "node scripts/init-kv.js"
+  },
+  "devDependencies": {
+    "wrangler": "^3.99.0"
+  }
+}

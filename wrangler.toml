@@ -1,0 +1,31 @@
+name = "bienestar-notifier"
+main = "src/index.js"
+compatibility_date = "2024-12-01"
+
+# Cron triggers - descomenta el que prefieras:
+# "0 8 * * 1"    → Lunes a las 8:00 AM UTC
+# "0 8 * * 1-5"  → Lunes a Viernes a las 8:00 AM UTC
+# "0 */6 * * *"  → Cada 6 horas
+# "*/30 * * * *" → Cada 30 minutos (para pruebas)
+[triggers]
+crons = ["0 8 * * 1"]
+
+# KV Namespace - reemplaza <TU_KV_NAMESPACE_ID> después de crearlo con:
+#   wrangler kv namespace create BIENESTAR_KV
+[[kv_namespaces]]
+binding = "BIENESTAR_KV"
+id = "<TU_KV_NAMESPACE_ID>"
+
+# Workers AI binding
+[ai]
+binding = "AI"
+
+# Variables de entorno no sensibles
+[vars]
+MAX_IMAGENES = "15"
+
+# Secrets (configurar con wrangler secret put):
+#   wrangler secret put TELEGRAM_BOT_TOKEN
+#   wrangler secret put TELEGRAM_ADMIN_CHAT_ID
+#   wrangler secret put CF_ACCOUNT_ID
+#   wrangler secret put CF_API_TOKEN

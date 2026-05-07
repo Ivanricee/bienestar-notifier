@@ -1,15 +1,34 @@
 {
   "name": "bienestar-notifier",
   "version": "1.0.0",
-  "description": "Cloudflare Worker que monitorea gob.mx/bienestar y envía notificaciones por Telegram",
+  "description": "Workflow que monitorea gob.mx/bienestar y envía notificaciones por Telegram",
   "type": "module",
-  "main": "src/index.js",
   "scripts": {
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
-    "init-kv": "node scripts/init-kv.js"
+    "dev": "node --env-file=.env.local --import tsx api/index.ts",
+    "deploy": "vercel --prod",
+    "test:telegram": "node --env-file=.env.local --import tsx tests/test-telegram.ts",
+    "test:scraping": "node --env-file=.env.local --import tsx tests/test-scraping.ts",
+    "test:vision": "node --env-file=.env.local --import tsx tests/test-vision.ts",
+    "test:gemini": "node --env-file=.env.local --import tsx tests/test-gemini.ts"
+  },
+  "dependencies": {
+    "@ai-sdk/google": "^3.0.67",
+    "@hono/node-server": "^2.0.0",
+    "@upstash/redis": "^1.37.0",
+    "@upstash/workflow": "^1.2.0",
+    "ai": "^6.0.175",
+    "hono": "^4.12.15",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
-    "wrangler": "^3.99.0"
+    "@eslint/js": "^9.25.1",
+    "@types/node": "^20.11.17",
+    "dotenv": "^16.5.0",
+    "eslint": "^9.25.1",
+    "globals": "^16.0.0",
+    "prettier": "^3.5.3",
+    "tsx": "^4.7.1",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.31.1"
   }
 }

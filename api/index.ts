@@ -3,6 +3,8 @@ import { serve } from "@hono/node-server";
 import { serve as workflowServe } from "@upstash/workflow/hono";
 import { type ScrapeImagesType, scrapeImages } from "../src/lib/scraper.ts";
 import { getClassifiedImages } from "../src/lib/imgClassifier.ts";
+import { analyzeImagesWithVision } from "../src/lib/vision.ts";
+import { reasoningGenerateTemplate } from "../src/lib/reasoning.ts";
 
 /*import { analyzeImages, Vision } from "../src/lib/vision.ts";
 import { makeDecision } from "../src/lib/reasoning.ts";
@@ -76,6 +78,17 @@ app.get("/api/scrape", async (c) => {
 app.get("/api/classify", async (c) => {
   const imageMatched = await getClassifiedImages(/*recibe scraped images */);
   return c.json(imageMatched);
+});
+app.get("api/vision", async (v) => {
+  const visionResult = await analyzeImagesWithVision();
+  console.log("Debug 4 visionResult------------------");
+  console.log("visionResult", visionResult);
+  console.log("---------------------------------------");
+  return v.json(visionResult);
+});
+app.get("api/template", async (t) => {
+  const templateResult = await reasoningGenerateTemplate(/*visionResult*/);
+  return t.json(templateResult);
 });
 //extractor: ¿Qué dice la imagen? (AI Vision)
 //endpoint to extract the info from the given image

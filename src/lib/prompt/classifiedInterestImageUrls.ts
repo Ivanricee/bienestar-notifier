@@ -6,7 +6,12 @@ import { ScrapeImagesType } from "../scraper.ts";
 
 // ------------------------------------------------
 export function classifiedImagesPrompt(scrapedImages: ScrapeImagesType[]): string {
-  const topicsJson = JSON.stringify(TOPICS, null, 2);
+  const keysToRemove = ["prompt_extraction", "template_msg"];
+  const topicsJson = JSON.stringify(
+    TOPICS,
+    (key, value) => (keysToRemove.includes(key) ? undefined : value),
+    2
+  );
   const imagesJson = JSON.stringify(scrapedImages, null, 2);
   const prompt = `
   You are a URL classifier. Your task is to find semantic relationships between article URLs and topics of interest, using semantic understanding of Spanish — not just exact word matching.
@@ -24,8 +29,7 @@ export function classifiedImagesPrompt(scrapedImages: ScrapeImagesType[]): strin
   Each object has:
   - "id": unique identifier — keep exactly as received
   - "onclick": the URL to analyze — always a URL, may point to an article, image, or internal system
-  - "thumbnail_url": ignore completely for classification
-  - "raw_url": secondary support — use only if onclick lacks readable words
+  - "thumbnail_url": secondary support — use only if onclick lacks readable words
 
   ## URL ANALYSIS RULES
 
@@ -37,12 +41,12 @@ export function classifiedImagesPrompt(scrapedImages: ScrapeImagesType[]): strin
   - URLs are in Spanish — apply full semantic understanding including synonyms and related terms
 
   **When onclick has no readable words:**
-  - If onclick contains only numbers, IDs, file names, or unknown characters → use raw_url as the analysis source
-  - If raw_url also lacks readable words → include the object with id_topic as empty string ""
+  - If onclick contains only numbers, IDs, file names, or unknown characters → use thumbnail_url as the analysis source
+  - If thumbnail_url also lacks readable words → include the object with id_topic as empty string ""
 
   **When onclick has readable words:**
   - Use those words to evaluate against topics semantically
-  - raw_url can reinforce the decision but cannot override onclick
+  - thumbnail_url can reinforce the decision but cannot override onclick
 
   ## CLASSIFICATION RULES BY TYPE
 
@@ -75,7 +79,7 @@ export function classifiedImagesPrompt(scrapedImages: ScrapeImagesType[]): strin
   - Each object may match at most ONE topic — the most specific one
   - It is ALWAYS preferable to discard or use id_topic "" than to assign an incorrect topic
   - NEVER force a relationship that does not clearly exist semantically
-  - Keep original values of id, onclick, thumbnail_url and raw_url exactly as received
+  - Keep original values of id, onclick and thumbnail_url exactly as received
 
   ## RESPONSE FORMAT
   Respond ONLY with a JSON object. No explanations, no markdown, no text outside the JSON.
@@ -87,7 +91,6 @@ export function classifiedImagesPrompt(scrapedImages: ScrapeImagesType[]): strin
         "id": "original object id",
         "onclick": "original url",
         "thumbnail_url": "original url",
-        "raw_url": "original path or url",
         "id_topic": "matched topic id or empty string if no readable words"
       }
     ]

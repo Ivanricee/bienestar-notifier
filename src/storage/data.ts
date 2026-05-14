@@ -1,25 +1,27 @@
 // ------------------------------------------------
 // TYPES
 // ------------------------------------------------
-interface ExactTopic {
+export interface ExactTopic {
   id: string;
   type: "exact";
   keywords_required: string[];
   keywords_context: string[];
   prompt_extraction: string;
+  prompt_template: string;
   template_msg: string;
 }
 
-interface SemanticTopic {
+export interface SemanticTopic {
   id: string;
   type: "semantic";
-  prompt_extraction: string;
   description: string;
   keywords_hint: string[];
+  prompt_extraction: string;
+  prompt_template: string;
   template_msg: string;
 }
 
-type Topic = ExactTopic | SemanticTopic;
+export type Topic = ExactTopic | SemanticTopic;
 
 // ------------------------------------------------
 // TOPICS
@@ -52,8 +54,28 @@ export const TOPICS: Topic[] = [
       "letras",
       "orden alfabetico",
     ],
-    prompt_extraction: "Extrae las fechas y actividades...",
-    template_msg: "Hola {nombre}, tu actividad: {fecha} - {actividad}",
+    prompt_extraction: `
+      Extract all payment dates and their corresponding letter ranges
+      from the payment calendar visible in the image.
+      Structure the result as:
+      {
+        letra: string,  // letter or range, e.g: "D-F"
+        dia: string,    // payment day, e.g: "viernes"
+        fecha: string,  // full date, e.g: "6 de marzo"
+      }[]
+    `,
+    prompt_template: `
+      Using extracted_data, find the payment date or dates corresponding
+      to the first letter of the destinatario's first_surname.
+      Generate a short informal greeting in Spanish, casual, maximum 1 sentence, no formalities.
+      Structure the result as:
+      {
+        saludo: string,  // informal greeting generated in Spanish
+        dia: string[],     // payment day or days
+        fecha: string[],   // full date or dates
+      }
+    `,
+    template_msg: "{saludo} Tu pago del bimestre cae el {dia} {fecha} 💸",
   },
   {
     id: "imss_gratuito",
@@ -61,15 +83,42 @@ export const TOPICS: Topic[] = [
     description:
       "Anuncio de registro o acceso gratuito al seguro social IMSS para cualquier tipo de persona sin importar si tiene empleo formal",
     keywords_hint: ["imss", "seguro", "registro", "afiliacion", "gratuito"],
-    prompt_extraction: "Extrae las fechas y actividades...",
-    template_msg: "Hola {nombre}, tu actividad: {fecha} - {actividad}",
+    prompt_extraction: `
+      Extract the most relevant information about the free IMSS registration visible in the image.
+      Structure the result as:
+      {
+        descripcion: string,   // brief summary of what the image announces
+        fechas: string[],      // mentioned dates, empty array if none
+        requisitos: string[],  // mentioned requirements, empty array if none
+      }
+    `,
+    prompt_template: `
+      Using extracted_data, extract the most relevant information about the IMSS registration.
+      Generate a short informal greeting in Spanish, casual, maximum 1 sentence, no formalities.
+      Structure the result as:
+      {
+        saludo: string,        // informal greeting generated in Spanish
+        descripcion: string,   // brief summary
+        fechas: string[],      // mentioned dates, empty array if none
+        requisitos: string[],  // mentioned requirements, empty array if none
+      }
+    `,
+    template_msg: "{saludo} {descripcion} 📋 Fechas: {fechas}. Requisitos: {requisitos}",
   },
 ];
 
-export const DESTINATARIOS = [
+export interface Destinatario {
+  name: string;
+  first_surname: string;
+  chat_id: string;
+  subscribed_topics: string[];
+}
+export const DESTINATARIOS: Destinatario[] = [
   {
-    name: "Juan Pérez",
+    name: "Juan",
+    first_surname: "Pérez",
     chat_id: "123456789",
     subscribed_topics: ["calendario_pension"],
   },
 ];
+export const ACTIVE_TOPICS = new Set(DESTINATARIOS.flatMap((d) => d.subscribed_topics));

@@ -7,39 +7,29 @@ const HISTORY_KEY = "notifier:bienestar";
 
 const scrapedImages = [
   {
-    id: "f69ac98e-a86b-4a29-93af-dbe0d1ef2c3b",
+    id: "de9efd34-93e8-40ec-9d45-0049e764e9ee",
     onclick: "https://www.gob.mx/cms/uploads/image/file/1071840/IMG-20260503-WA0008.jpg",
-    raw_url: "/cms/uploads/identity/image/51298/IMG-20260503-WA0005.jpg",
-    thumbnail_url:
-      "https://res.cloudinary.com/ivanrice-c/image/fetch/c_limit,w_1120,h_1120,f_webp,q_auto/https://www.gob.mx/cms/uploads/identity/image/51298/IMG-20260503-WA0005.jpg",
+    thumbnail_url: "/cms/uploads/identity/image/51298/IMG-20260503-WA0005.jpg",
   },
   {
-    id: "3dc66e21-9295-4744-93cf-bad492e1f61c",
+    id: "8f9ccd3d-3339-4ffb-82f2-23475afd9649",
     onclick: "http://200.188.126.15:8082/UBICA_TU_PAGO.bienestar/index/",
-    raw_url: "/cms/uploads/identity/image/51299/IMG-20260503-WA0003.jpg",
-    thumbnail_url:
-      "https://res.cloudinary.com/ivanrice-c/image/fetch/c_limit,w_1120,h_1120,f_webp,q_auto/https://www.gob.mx/cms/uploads/identity/image/51299/IMG-20260503-WA0003.jpg",
+    thumbnail_url: "/cms/uploads/identity/image/51299/IMG-20260503-WA0003.jpg",
   },
   {
-    id: "9989de0e-3c61-4f7a-ab97-164ad6d30532",
+    id: "c01cc4e9-906c-44b4-837d-c9067c5e146c",
     onclick: "http://200.188.126.49/CINAPAM.bienestar/",
-    raw_url: "/cms/uploads/identity/image/47686/BannerTarjetaINAPAM.jpeg",
-    thumbnail_url:
-      "https://res.cloudinary.com/ivanrice-c/image/fetch/c_limit,w_1120,h_1120,f_webp,q_auto/https://www.gob.mx/cms/uploads/identity/image/47686/BannerTarjetaINAPAM.jpeg",
+    thumbnail_url: "/cms/uploads/identity/image/47686/BannerTarjetaINAPAM.jpeg",
   },
   {
-    id: "c7e23627-c87c-4ac3-940c-787d7f5ed9c3",
+    id: "3be8eead-0907-4697-a8fa-9a52d27624ea",
     onclick: "http://ubicatubancodelbienestar.bienestar.gob.mx/",
-    raw_url: "/cms/uploads/identity/image/38431/_2BANCO_DEL_IENESTAR_BANNER_WEB-02.jpg",
-    thumbnail_url:
-      "https://res.cloudinary.com/ivanrice-c/image/fetch/c_limit,w_1120,h_1120,f_webp,q_auto/https://www.gob.mx/cms/uploads/identity/image/38431/_2BANCO_DEL_IENESTAR_BANNER_WEB-02.jpg",
+    thumbnail_url: "/cms/uploads/identity/image/38431/_2BANCO_DEL_IENESTAR_BANNER_WEB-02.jpg",
   },
   {
-    id: "7fbdb2a3-3918-4510-bf09-28df982b438a",
+    id: "4dffea41-631d-4b33-a434-43ff449d3e80",
     onclick: "https://www.gob.mx/bienestar/documentos/plan-nacional-de-desarrollo-2025-2030-388018",
-    raw_url: "/cms/uploads/identity/image/46884/BannerPND25-30gn.jpeg",
-    thumbnail_url:
-      "https://res.cloudinary.com/ivanrice-c/image/fetch/c_limit,w_1120,h_1120,f_webp,q_auto/https://www.gob.mx/cms/uploads/identity/image/46884/BannerPND25-30gn.jpeg",
+    thumbnail_url: "/cms/uploads/identity/image/46884/BannerPND25-30gn.jpeg",
   },
 ];
 /*[
@@ -89,8 +79,8 @@ export async function getClassifiedImages(/*scrapedImages: ScrapeImagesType[]*/)
   //no hay informacion nueva que revisar, dormir 1 semana
   if (filteredImageTopics.length === 0) return null;
   //filter interest topics
-  const filteredInterestTopivs = filterInterestTopics(filteredImageTopics);
-  return filteredInterestTopivs;
+  const filteredInterestTopics = filterInterestTopics(filteredImageTopics);
+  return filteredInterestTopics;
 }
 
 async function filterStoredImages(scrapedImages: ScrapeImagesType[]): Promise<ScrapeImagesType[]> {
@@ -114,9 +104,14 @@ export interface classifiedImages extends ScrapeImagesType {
   id_topic: string;
 }
 async function filterInterestTopics(ImageTopics: ScrapeImagesType[]): Promise<classifiedImages[]> {
-  //validate if is an array if not return null or error
-  const classifiedImages = await reasoningClassifyImages(ImageTopics);
-  return await classifiedImages;
+  const { results, error } = await reasoningClassifyImages(ImageTopics);
+
+  if (error) {
+    console.error("Error classifying images:", error);
+    return [];
+  }
+
+  return results;
 }
 
 // Call after telegram actions.

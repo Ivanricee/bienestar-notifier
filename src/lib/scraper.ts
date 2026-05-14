@@ -5,7 +5,6 @@ type responseScrape = {
 export interface ScrapeImagesType {
   id: string;
   onclick: string;
-  raw_url: string;
   thumbnail_url: string;
 }
 /**
@@ -99,20 +98,19 @@ function processBanner(banners: responseScrape[]): ScrapeImagesType[] {
     const match = itemBanner.onclick.match(/location\.href\s*=\s*['"]([^'"]+)['"]/);
     const cleanOnclick = match ? match[1] : null;
     // 2. Procesar la imagen
-    const thumbnail_url = itemBanner.images[0] ? getCloudinaryImg(itemBanner.images[0]) : null;
+    const thumbnail_url = itemBanner.images[0];
     if (!thumbnail_url || !cleanOnclick) continue;
     // 3. Agregar al resultado
     bannersArr.push({
       id: crypto.randomUUID(),
       onclick: cleanOnclick,
-      raw_url: itemBanner.images[0],
       thumbnail_url,
     });
   }
   return bannersArr;
 }
 
-function getCloudinaryImg(urlImage: string) {
+export function getCloudinaryImg(urlImage: string) {
   const baseUrl = "https://www.gob.mx";
   const cloudinaryUrl = "https://res.cloudinary.com/ivanrice-c/image/fetch/";
   const cloudinaryTransformation = "c_limit,w_1120,h_1120,f_webp,q_auto/";

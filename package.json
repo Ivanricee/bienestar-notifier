@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@ai-sdk/google": "^3.0.67",
+    "@ai-sdk/groq": "^3.0.39",
     "@hono/node-server": "^2.0.0",
     "@upstash/redis": "^1.37.0",
     "@upstash/workflow": "^1.2.0",

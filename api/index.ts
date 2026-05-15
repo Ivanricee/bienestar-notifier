@@ -5,6 +5,7 @@ import { type ScrapeImagesType, scrapeImages } from "../src/lib/scraper.ts";
 import { getClassifiedImages } from "../src/lib/imgClassifier.ts";
 import { analyzeImagesWithVision } from "../src/lib/vision.ts";
 import { reasoningGenerateTemplate } from "../src/lib/reasoning.ts";
+import { sendAllMessages } from "../src/lib/notifier.ts";
 
 /*import { analyzeImages, Vision } from "../src/lib/vision.ts";
 import { makeDecision } from "../src/lib/reasoning.ts";
@@ -87,8 +88,9 @@ app.get("api/vision", async (v) => {
   return v.json(visionResult);
 });
 app.get("api/template", async (t) => {
-  const templateResult = await reasoningGenerateTemplate(/*visionResult*/);
-  return t.json(templateResult);
+  const templateMessages = await reasoningGenerateTemplate(/*visionResult*/);
+  await sendAllMessages(templateMessages);
+  return t.json(templateMessages);
 });
 //extractor: ¿Qué dice la imagen? (AI Vision)
 //endpoint to extract the info from the given image

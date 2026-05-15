@@ -113,12 +113,17 @@ export interface Destinatario {
   chat_id: string;
   subscribed_topics: string[];
 }
-export const DESTINATARIOS: Destinatario[] = [
-  {
-    name: "Juan",
-    first_surname: "Pérez",
-    chat_id: "123456789",
-    subscribed_topics: ["calendario_pension"],
-  },
-];
+export const DESTINATARIOS: Destinatario[] = (() => {
+  try {
+    const envData = process.env.DESTINATARIOS;
+    if (!envData) {
+      console.warn("DESTINATARIOS not found in process.env, using empty array");
+      return [];
+    }
+    return JSON.parse(envData);
+  } catch (error) {
+    console.error("Error parsing DESTINATARIOS from process.env:", error);
+    return [];
+  }
+})();
 export const ACTIVE_TOPICS = new Set(DESTINATARIOS.flatMap((d) => d.subscribed_topics));

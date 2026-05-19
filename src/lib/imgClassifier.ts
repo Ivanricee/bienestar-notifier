@@ -1,7 +1,7 @@
 import { createHash } from "crypto";
-import { redis } from "../lib/redis.ts";
-import { reasoningClassifyImages } from "./reasoning.ts";
-import { ScrapeImagesType } from "./scraper.ts";
+import { redis } from "../lib/redis.js";
+import { reasoningClassifyImages } from "./reasoning.js";
+import { ScrapeImagesType } from "./scraper.js";
 
 const HISTORY_KEY = "notifier:bienestar";
 

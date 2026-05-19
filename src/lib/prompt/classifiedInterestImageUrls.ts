@@ -1,8 +1,8 @@
 // ------------------------------------------------
 // PROMPT
 
-import { TOPICS } from "../../storage/data.ts";
-import { ScrapeImagesType } from "../scraper.ts";
+import { TOPICS } from "../../storage/data.js";
+import { ScrapeImagesType } from "../scraper.js";
 
 // ------------------------------------------------
 export function classifiedImagesPrompt(scrapedImages: ScrapeImagesType[]): string {

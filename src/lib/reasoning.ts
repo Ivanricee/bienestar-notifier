@@ -1,12 +1,12 @@
 import { generateObject } from "ai";
 import { google } from "@ai-sdk/google";
-import { classifiedImages } from "./imgClassifier.ts";
-import { ScrapeImagesType } from "./scraper.ts";
-import { responseSchema } from "./schemas/classified-image-schema.ts";
-import { classifiedImagesPrompt } from "./prompt/classifiedInterestImageUrls.ts";
-import { VisionResult } from "./schemas/classified-vision-image-schema.ts";
-import { visionTemplateSchema } from "./schemas/vision-template.ts";
-import { visionTemplatePrompt } from "./prompt/visionTemplate.ts";
+import { classifiedImages } from "./imgClassifier.js";
+import { ScrapeImagesType } from "./scraper.js";
+import { responseSchema } from "./schemas/classified-image-schema.js";
+import { classifiedImagesPrompt } from "./prompt/classifiedInterestImageUrls.js";
+import { VisionResult } from "./schemas/classified-vision-image-schema.js";
+import { visionTemplateSchema } from "./schemas/vision-template.js";
+import { visionTemplatePrompt } from "./prompt/visionTemplate.js";
 
 export interface ClassifiedImagesResult {
   results: classifiedImages[];

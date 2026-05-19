@@ -1,9 +1,9 @@
 import { generateObject } from "ai";
-import { classifiedImages } from "./imgClassifier.ts";
-import { visionPrompt } from "./prompt/classifiedVisionImage.ts";
-import { VisionResult, visionResultSchema } from "./schemas/classified-vision-image-schema.ts";
+import { classifiedImages } from "./imgClassifier.js";
+import { visionPrompt } from "./prompt/classifiedVisionImage.js";
+import { VisionResult, visionResultSchema } from "./schemas/classified-vision-image-schema.js";
 import { groq } from "@ai-sdk/groq";
-import { ACTIVE_TOPICS, TOPICS } from "../storage/data.ts";
+import { ACTIVE_TOPICS, TOPICS } from "../storage/data.js";
 
 // ------------------------------------------------
 // HELPERS

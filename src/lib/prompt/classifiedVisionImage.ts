@@ -1,8 +1,8 @@
 // ------------------------------------------------
 // PROMPT
 
-import { Topic } from "../../storage/data.ts";
-import { classifiedImages } from "../imgClassifier.ts";
+import { Topic } from "../../storage/data.js";
+import { classifiedImages } from "../imgClassifier.js";
 
 // ------------------------------------------------
 export function visionPrompt(image: classifiedImages, topics: Topic[]): string {

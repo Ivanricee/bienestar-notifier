@@ -1,5 +1,5 @@
-import { DESTINATARIOS, TOPICS } from "../../storage/data.ts";
-import { VisionResult } from "../schemas/classified-vision-image-schema.ts";
+import { DESTINATARIOS, TOPICS } from "../../storage/data.js";
+import { VisionResult } from "../schemas/classified-vision-image-schema.js";
 
 export function visionTemplatePrompt(visionResult: VisionResult[]): string {
   const topicsFiltered = TOPICS.map(

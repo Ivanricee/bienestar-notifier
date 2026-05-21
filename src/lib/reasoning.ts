@@ -7,7 +7,109 @@ import { classifiedImagesPrompt } from "./prompt/classifiedInterestImageUrls.js"
 import { VisionResult } from "./schemas/classified-vision-image-schema.js";
 import { visionTemplateSchema } from "./schemas/vision-template.js";
 import { visionTemplatePrompt } from "./prompt/visionTemplate.js";
-
+/*const visionResults: VisionResult[] = [
+  {
+    id: "de9efd34-93e8-40ec-9d45-0049e764e9ee",
+    onclick: "https://www.gob.mx/cms/uploads/image/file/1071840/IMG-20260503-WA0008.jpg",
+    thumbnail_url: "/cms/uploads/identity/image/51298/IMG-20260503-WA0005.jpg",
+    id_topic: "calendario_pension",
+    id_topic_confidence: 1,
+    confirmed: true,
+    extracted_data: [
+      {
+        letra: "A",
+        dia: "lunes",
+        fecha: "4 de mayo",
+      },
+      {
+        letra: "B",
+        dia: "martes",
+        fecha: "5 de mayo",
+      },
+      {
+        letra: "C",
+        dia: "miércoles",
+        fecha: "6 de mayo",
+      },
+      {
+        letra: "C",
+        dia: "jueves",
+        fecha: "7 de mayo",
+      },
+      {
+        letra: "D,E,F",
+        dia: "viernes",
+        fecha: "8 de mayo",
+      },
+      {
+        letra: "G",
+        dia: "lunes",
+        fecha: "11 de mayo",
+      },
+      {
+        letra: "G",
+        dia: "martes",
+        fecha: "12 de mayo",
+      },
+      {
+        letra: "H,I,J,K",
+        dia: "miércoles",
+        fecha: "13 de mayo",
+      },
+      {
+        letra: "L",
+        dia: "jueves",
+        fecha: "14 de mayo",
+      },
+      {
+        letra: "M",
+        dia: "viernes",
+        fecha: "15 de mayo",
+      },
+      {
+        letra: "M",
+        dia: "lunes",
+        fecha: "18 de mayo",
+      },
+      {
+        letra: "N,Ñ,O",
+        dia: "martes",
+        fecha: "19 de mayo",
+      },
+      {
+        letra: "P,Q",
+        dia: "miércoles",
+        fecha: "20 de mayo",
+      },
+      {
+        letra: "R",
+        dia: "jueves",
+        fecha: "21 de mayo",
+      },
+      {
+        letra: "R",
+        dia: "viernes",
+        fecha: "22 de mayo",
+      },
+      {
+        letra: "S",
+        dia: "lunes",
+        fecha: "25 de mayo",
+      },
+      {
+        letra: "T,U,V",
+        dia: "martes",
+        fecha: "26 de mayo",
+      },
+      {
+        letra: "W,X,Y,Z",
+        dia: "miércoles",
+        fecha: "27 de mayo",
+      },
+    ],
+    template_msg: "",
+  },
+];*/
 export interface ClassifiedImagesResult {
   results: classifiedImages[];
   error: string | null;
@@ -59,110 +161,7 @@ export async function reasoningClassifyImages(
     return { results: [], error: errorMessage };
   }
 }
-export async function reasoningGenerateTemplate(/*visionResults: VisionResult[]*/) {
-  const visionResults: VisionResult[] = [
-    {
-      id: "de9efd34-93e8-40ec-9d45-0049e764e9ee",
-      onclick: "https://www.gob.mx/cms/uploads/image/file/1071840/IMG-20260503-WA0008.jpg",
-      thumbnail_url: "/cms/uploads/identity/image/51298/IMG-20260503-WA0005.jpg",
-      id_topic: "calendario_pension",
-      id_topic_confidence: 1,
-      confirmed: true,
-      extracted_data: [
-        {
-          letra: "A",
-          dia: "lunes",
-          fecha: "4 de mayo",
-        },
-        {
-          letra: "B",
-          dia: "martes",
-          fecha: "5 de mayo",
-        },
-        {
-          letra: "C",
-          dia: "miércoles",
-          fecha: "6 de mayo",
-        },
-        {
-          letra: "C",
-          dia: "jueves",
-          fecha: "7 de mayo",
-        },
-        {
-          letra: "D,E,F",
-          dia: "viernes",
-          fecha: "8 de mayo",
-        },
-        {
-          letra: "G",
-          dia: "lunes",
-          fecha: "11 de mayo",
-        },
-        {
-          letra: "G",
-          dia: "martes",
-          fecha: "12 de mayo",
-        },
-        {
-          letra: "H,I,J,K",
-          dia: "miércoles",
-          fecha: "13 de mayo",
-        },
-        {
-          letra: "L",
-          dia: "jueves",
-          fecha: "14 de mayo",
-        },
-        {
-          letra: "M",
-          dia: "viernes",
-          fecha: "15 de mayo",
-        },
-        {
-          letra: "M",
-          dia: "lunes",
-          fecha: "18 de mayo",
-        },
-        {
-          letra: "N,Ñ,O",
-          dia: "martes",
-          fecha: "19 de mayo",
-        },
-        {
-          letra: "P,Q",
-          dia: "miércoles",
-          fecha: "20 de mayo",
-        },
-        {
-          letra: "R",
-          dia: "jueves",
-          fecha: "21 de mayo",
-        },
-        {
-          letra: "R",
-          dia: "viernes",
-          fecha: "22 de mayo",
-        },
-        {
-          letra: "S",
-          dia: "lunes",
-          fecha: "25 de mayo",
-        },
-        {
-          letra: "T,U,V",
-          dia: "martes",
-          fecha: "26 de mayo",
-        },
-        {
-          letra: "W,X,Y,Z",
-          dia: "miércoles",
-          fecha: "27 de mayo",
-        },
-      ],
-      template_msg: "",
-    },
-  ];
+export async function generateTemplates(visionResults: VisionResult[]) {
   if (visionResults.length === 0) return [];
 
   try {

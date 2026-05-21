@@ -26,27 +26,29 @@ function buildCloudinaryUrl(image: classifiedImages): string {
   // onclick no es imagen — usar thumbnail con baseUrl
   return getCloudinaryUrl(image.thumbnail_url, true);
 }
-
+/*const visionImages: classifiedImages[] = [
+  {
+    id: "de9efd34-93e8-40ec-9d45-0049e764e9ee",
+    onclick: "https://www.gob.mx/cms/uploads/image/file/1071840/IMG-20260503-WA0008.jpg",
+    thumbnail_url: "/cms/uploads/identity/image/51298/IMG-20260503-WA0005.jpg",
+    id_topic: "",
+  },
+  {
+    id: "8f9ccd3d-3339-4ffb-82f2-23475afd9649",
+    onclick: "http://200.188.126.15:8082/UBICA_TU_PAGO.bienestar/index/",
+    thumbnail_url: "/cms/uploads/identity/image/51299/IMG-20260503-WA0003.jpg",
+    id_topic: "calendario_pension",
+  },
+];*/
 // ------------------------------------------------
 // FASE 1 — VISION
 // ------------------------------------------------
-export async function analyzeImagesWithVision(): Promise<VisionResult[]> {
+export async function analyzeImagesWithVision(
+  visionImages: classifiedImages[]
+): Promise<VisionResult[]> {
   const activeTopics = new Set(ACTIVE_TOPICS);
   //visionImages: classifiedImages[],
-  const visionImages: classifiedImages[] = [
-    {
-      id: "de9efd34-93e8-40ec-9d45-0049e764e9ee",
-      onclick: "https://www.gob.mx/cms/uploads/image/file/1071840/IMG-20260503-WA0008.jpg",
-      thumbnail_url: "/cms/uploads/identity/image/51298/IMG-20260503-WA0005.jpg",
-      id_topic: "",
-    },
-    {
-      id: "8f9ccd3d-3339-4ffb-82f2-23475afd9649",
-      onclick: "http://200.188.126.15:8082/UBICA_TU_PAGO.bienestar/index/",
-      thumbnail_url: "/cms/uploads/identity/image/51299/IMG-20260503-WA0003.jpg",
-      id_topic: "calendario_pension",
-    },
-  ];
+
   if (visionImages.length === 0) return [];
   const sortedImages = [...visionImages].sort((a, b) => {
     if (a.id_topic !== "" && b.id_topic === "") return -1;

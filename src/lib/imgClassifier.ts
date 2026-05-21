@@ -5,7 +5,7 @@ import { ScrapeImagesType } from "./scraper.js";
 
 const HISTORY_KEY = "notifier:bienestar";
 
-const scrapedImages = [
+/*const scrapedImages = [
   {
     id: "de9efd34-93e8-40ec-9d45-0049e764e9ee",
     onclick: "https://www.gob.mx/cms/uploads/image/file/1071840/IMG-20260503-WA0008.jpg",
@@ -32,7 +32,7 @@ const scrapedImages = [
     thumbnail_url: "/cms/uploads/identity/image/46884/BannerPND25-30gn.jpeg",
   },
 ];
-/*[
+[
   {
     id: "695b98ff-77c8-400c-97f1-d408ff0cb7c2",
     onclick: "https://ubicatumodulo.bienestar.gob.mx/",
@@ -72,7 +72,7 @@ function makeId(onclick: string, thumbnail_url: string): string {
  * call an LLm to classify if hte information context is of interest.
  * @returns
  */
-export async function getClassifiedImages(/*scrapedImages: ScrapeImagesType[]*/) {
+export async function getClassifiedImages(scrapedImages: ScrapeImagesType[]) {
   //filter existing images
   const filteredImageTopics = await filterStoredImages(scrapedImages);
   //console.log("filteredImageTopics: ", filteredImageTopics);

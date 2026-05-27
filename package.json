@@ -13,6 +13,7 @@
     "@upstash/redis": "^1.37.0",
     "@upstash/workflow": "^1.2.0",
     "ai": "^6.0.175",
+    "vercel": "^54.4.1",
     "zod": "^4.4.3"
   },
   "devDependencies": {

@@ -20,7 +20,6 @@ ${topicsJson}
 ${imageJson}
 
 ## YOUR TASK
-
 Analyze the image you are receiving.
 
 ### STEP 1 — TOPIC CONFIRMATION
@@ -72,21 +71,22 @@ Only if confirmed is true:
 - Extract only what is explicitly visible in the image following those instructions precisely
 - Do not invent or assume anything not clearly visible
 - If something described in prompt_extraction is not visible, omit it from extracted_data
+- extracted_data can be an object or an array depending on what prompt_extraction instructs
 
-If confirmed is false → extracted_data: null
+If confirmed is false → extracted_data must be {} (empty object, never null)
 
 ## RESPONSE FORMAT
-Respond ONLY with a JSON object. No explanations, no markdown, no text outside the JSON.
+Respond ONLY with raw JSON. No markdown, no code blocks, no backticks, no explanations, no text outside the JSON.
 
 {
   "id": "original id from JSON 2",
-  "onclick": "original value",
-  "thumbnail_url": "original value",
-  "id_topic": "confirmed topic id or empty string",
+  "onclick": "original value from JSON 2",
+  "thumbnail_url": "original value from JSON 2",
+  "id_topic": "confirmed topic id or empty string if no match",
   "id_topic_confidence": 0.0 to 1.0,
   "confirmed": true or false,
-  "extracted_data": extracted object following prompt_extraction instructions or null
-  "template_msg": "original value"
+  "extracted_data": extracted object or array following prompt_extraction instructions, or {} if confirmed is false,
+  "template_msg": ""
 }
 `;
 }

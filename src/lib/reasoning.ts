@@ -171,6 +171,9 @@ export async function generateTemplates(visionResults: VisionResult[]) {
       prompt: visionTemplatePrompt(visionResults),
     });
 
+    console.log("-------------object.messages: -----------------");
+    console.log("object: ", object.messages);
+    console.log("-------------.------------: -----------------");
     return object.messages;
   } catch (error) {
     console.error("Fase2 template generation failed:", error);

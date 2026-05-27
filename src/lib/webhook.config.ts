@@ -1,13 +1,14 @@
-/*export const CONFIG = {
-  SLEEP_BETWEEN_SEARCHES: 60 * 60 * 24, // 1 día en segundos
-  MAX_ATTEMPTS: 15,                      // intentos máximos
-}
-*/
-//testing
 export const CONFIG = {
-  SLEEP_BETWEEN_SEARCHES: 20, // 20 segundos
-  MAX_ATTEMPTS: 5, // 5 intentos
+  SLEEP_BETWEEN_SEARCHES: 60 * 60 * 24, // 1 día en segundos
+  MAX_ATTEMPTS: 12, // intentos máximos
 };
+
+//testing
+/*export const CONFIG = {
+  SLEEP_BETWEEN_SEARCHES: 120, // 20 segundos
+  MAX_ATTEMPTS: 2, // 5 intentos
+};*/
+
 export function getSleepUntilNextCycle(): number {
   const now = new Date();
   const next = new Date(now);
